@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+int main()
+{
+    int i, a[10], key;
+    int n;
+    double clk;
+    clock_t starttime, endtime;
+    printf("Enter the number of medicine types\n");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++)
+        a[i] = rand() % 100;
+
+    printf("\nThe medicine IDs are: \n");
+    for (i = 0; i < n; i++)
+        printf("%d\t", a[i]);
+
+    printf("\nEnter the medicine ID to search\n");
+    scanf("%d", &key);
+
+    starttime = clock();
+    for (i = 0; i < n; i++)
+    {
+        if (a[i] == key)
+        {
+            printf("Medicine ID %d is present at location %d\n", key, i + 1);
+            endtime = clock();
+            clk = (double)(endtime - starttime) / CLOCKS_PER_SEC;
+            printf("Time taken to search is %f sec\n", clk);
+            return 0;
+        }
+    }
+    printf("not found\n");
+}
