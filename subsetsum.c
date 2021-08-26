@@ -1,37 +1,52 @@
-#include <stdio.h>
- 
-// Returns true if there is a subset
-// of set[] with sum equal to given sum
-bool isSubsetSum(int set[], int n, int sum)
-{
-    // Base Cases
-    if (sum == 0)
-        return true;
-    if (n == 0)
-        return false;
- 
-    // If last element is greater than sum,
-    // then ignore it
-    if (set[n - 1] > sum)
-        return isSubsetSum(set, n - 1, sum);
- 
-    /* else, check if sum can be obtained by any
-of the following:
-      (a) including the last element
-      (b) excluding the last element   */
-    return isSubsetSum(set, n - 1, sum)
-           || isSubsetSum(set, n - 1, sum - set[n - 1]);
+#include<conio.h>
+#include<stdio.h>
+int count,w[10],d,x[10]; 
+  
+void subset(int cs,int k,int r) 
+{ 
+   int i; 
+   x[k]=1; 
+
+ if((cs+w[k])==d) 
+ { 
+      printf("\n Subset solution = %d\n",++count);
+      for(i=0; i<=k; i++)
+      {  
+          if(x[i]==1) 
+          printf("%d\n",w[i]);
+      } 
+ } 
+
+ else if(cs+w[k]+w[k+1] <=d) {
+    subset(cs+w[k],k+1,r-w[k]); 
+ }
+    
+
+ if((cs+r-w[k]>=d)&&(cs+w[k+1])<=d) 
+  {  
+    x[k]=0; 
+     subset(cs,k+1,r-w[k]); 
+  } 
 }
- 
-// Driver code
-int main()
-{
-    int set[] = { 3, 34, 4, 12, 5, 2 };
-    int sum = 9;
-    int n = sizeof(set) / sizeof(set[0]);
-    if (isSubsetSum(set, n, sum) == true)
-        printf("Found a subset with given sum");
-    else
-        printf("No subset with given sum");
-    return 0;
+
+int main() 
+{ 
+    int sum=0,i,n; 
+    printf("enter no of elements\n"); 
+    scanf("%d",&n); 
+    printf("Enter the elements in ascending order\n"); 
+    for(i=0; i<n; i++) 
+         scanf("%d",&w[i]); 
+    printf("Enter the required sum\n");  
+    scanf("%d",&d); 
+    for(i=0; i<n; i++) 
+       sum +=w[i]; 
+    if(sum < d) 
+    { 
+      printf("no solution exits\n"); 
+    }  
+    printf("The solution is\n"); 
+    count =0; 
+    subset(0,0,sum); 
+    return 0; 
 }
